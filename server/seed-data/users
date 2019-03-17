@@ -1,0 +1,2 @@
+id,public_id,username,email,password,created
+1,4a84380c-ea2c-478d-8d1c-9d903698d634,claude,asdf@asdf.com,pbkdf2:sha256:50000$RX4nZNP6$4ccb385175c14f172ee42225cb4256fcb002a541b16690b422f6719a0d8b9c17,2019-02-19 00:29:58.346011

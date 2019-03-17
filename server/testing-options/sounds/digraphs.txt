@@ -1,0 +1,6 @@
+sh
+ch
+ph
+th
+wh
+ng
