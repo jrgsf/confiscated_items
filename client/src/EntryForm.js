@@ -1,55 +1,60 @@
-import React, { Component } from "react"
-import { Col, Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
-import axios from "axios"
-
-var logvar = 0
+import React, { Component } from "react";
 
 class EntryForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { itemName: "", itemDescription: ""}
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.state = { itemName: "", itemDescription: "" };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSubmit(event) {
-    event.preventDefaut();
-    // otherwise will automatically submit before user enters anything!!!
-//    event.target.reset();
-    // makes form blank
-    const entry = this.state
-    axios.post("http://localhost:5000/api/add-entry", entry).
-    console.log("Form submitted!", this.state.itemName)
+    event.preventDefault();
+    let formData = {
+      itemName: this.state.itemName,
+      itemDescription: this.state.itemDescription
+    };
+
+    fetch("http://localhost:5000/api/add-entry", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    }).then(response => response.json());
   }
+  // otherwise will automatically submit before user enters anything!!!
+  //    event.target.reset();
+  // makes form blank
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
-    console.log(event.target.value, this.state)
   }
 
   render() {
-    logvar += 1
-    console.log("did it add????", logvar)
+    console.log(this.state);
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Label>Item Name</Label>
-        <Input
+      <form onSubmit={this.handleSubmit}>
+        <label>Item Name</label>
+        <input
           name="itemName"
           type="text"
           value={this.state.value}
           onChange={this.handleChange}
         />
-        <Label>Item Description</Label>
-        <Input
+        <label>Item Description</label>
+        <input
           name="itemDescription"
           type="textarea"
           value={this.state.value}
           onChange={this.handleChange}
         />
-        <Button>Submit</Button>
-      </Form>
-    )
+        <button>Submit</button>
+      </form>
+    );
   }
 }
 
-export default EntryForm
+export default EntryForm;
