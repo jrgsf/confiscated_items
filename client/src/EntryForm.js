@@ -1,18 +1,33 @@
 import React, { Component } from "react";
+import { Form, Label, Input, Button } from "reactstrap";
 
 class EntryForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { itemName: "", itemDescription: "" };
+    this.state = { itemName: "", itemDescription: "", lat: null, lng: null };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        });
+      },
+      err => console.log(err)
+    );
   }
 
   handleSubmit(event) {
     event.preventDefault();
     let formData = {
       itemName: this.state.itemName,
-      itemDescription: this.state.itemDescription
+      itemDescription: this.state.itemDescription,
+      latitude: this.state.lat,
+      longitude: this.state.lng
     };
 
     fetch("http://localhost:5000/api/add-entry", {
@@ -34,25 +49,26 @@ class EntryForm extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>Item Name</label>
-        <input
+      <Form onSubmit={this.handleSubmit}>
+        <Label>Item Name</Label>
+        <Input
           name="itemName"
           type="text"
           value={this.state.value}
           onChange={this.handleChange}
         />
-        <label>Item Description</label>
-        <input
+        <br />
+        <Label>Item Description</Label>
+        <Input
           name="itemDescription"
           type="textarea"
           value={this.state.value}
           onChange={this.handleChange}
         />
-        <button>Submit</button>
-      </form>
+        <br />
+        <Button color="primary">Submit</Button>
+      </Form>
     );
   }
 }

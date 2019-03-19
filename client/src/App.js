@@ -5,7 +5,7 @@ import Entries from "./Entries";
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className="container">
         <Entries />
         <EntryForm />
       </div>
