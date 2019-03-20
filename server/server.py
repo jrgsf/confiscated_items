@@ -5,6 +5,7 @@ from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import ImmutableMultiDict
 import json
+import base64
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
@@ -12,7 +13,7 @@ api = Api(app)
 app.debug = True
 app.config['SECRET_KEY'] = 'super-secret'
 
-# testing_options_dir = "testing-options"
+
 @app.route("/api/add-entry", methods=['POST'])
 @cross_origin()
 def add_entry():
@@ -35,10 +36,9 @@ def add_entry():
 @cross_origin()
 def get_entries():
     entries = Entry.query.all()
-    print(entries)
+
     items = []
     for entry in entries:
-        print(entry.image)
         item = {
             "item": entry.item_name,
             "description": entry.item_description,
@@ -46,8 +46,12 @@ def get_entries():
             "latitude": entry.latitude,
             "longitude": entry.longitude
         }
+
+        if entry.image:
+            item['image'] = base64.encodestring(entry.image).decode('ascii')
+
         items.append(item)
-    print("items", items)
+    print(items)
     return jsonify(items)
 
 
