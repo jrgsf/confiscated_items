@@ -2,7 +2,9 @@ from flask import Flask, request, jsonify
 from model import Entry, User, Owner, connect_to_db, db
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS, cross_origin
-
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import ImmutableMultiDict
+import json
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
@@ -14,13 +16,16 @@ app.config['SECRET_KEY'] = 'super-secret'
 @app.route("/api/add-entry", methods=['POST'])
 @cross_origin()
 def add_entry():
-    data = request.get_json()
+    file = request.files
+    image = file['0'].read()
+    data = file['document'].read()
+    data = json.loads(data)
     item_name = data.get("itemName")
     item_description = data.get("itemDescription")
     latitude = data.get("latitude")
     longitude = data.get("longitude")
     new_entry = Entry(item_name=item_name,
-                      item_description=item_description, latitude=latitude, longitude=longitude)
+                      item_description=item_description, latitude=latitude, longitude=longitude, image=image)
     db.session.add(new_entry)
     db.session.commit()
     return "Done added it yeah"
@@ -33,6 +38,7 @@ def get_entries():
     print(entries)
     items = []
     for entry in entries:
+        print(entry.image)
         item = {
             "item": entry.item_name,
             "description": entry.item_description,
