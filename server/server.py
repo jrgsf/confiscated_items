@@ -24,8 +24,9 @@ def add_entry():
     data = json.loads(data)
     item_name = data.get("itemName")
     item_description = data.get("itemDescription")
-    latitude = data.get("latitude")
-    longitude = data.get("longitude")
+    location = data.get("location")
+    latitude = location["latitude"]
+    longitude = location["longitude"]
     if image:
         image = image.read()
         new_entry = Entry(item_name=item_name,

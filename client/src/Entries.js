@@ -3,9 +3,12 @@ import { Table } from "react-bootstrap";
 import DeleteEntry from "./DeleteEntry";
 class Entries extends Component {
   displayItems(items) {
+    console.log("ready");
     if (!items) {
+      console.log("no");
       return <div />;
     }
+    console.log("yes");
     return (
       <div>
         <br />
