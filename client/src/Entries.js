@@ -1,24 +1,13 @@
 import React, { Component } from "react";
 import { Table } from "react-bootstrap";
-
+import DeleteEntry from "./DeleteEntry";
 class Entries extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { items: "" };
-  }
-  async componentDidMount() {
-    try {
-      let response = await fetch(`http://localhost:5000/api/entries`);
-      let json = await response.json();
-      this.setState({ items: json });
-    } catch (e) {
-      console.log(e);
-    }
-  }
   displayItems(items) {
     if (!items) {
+      console.log("items", items);
       return <div />;
     }
+    console.log("items", items);
     return (
       <div>
         <br />
@@ -29,17 +18,28 @@ class Entries extends Component {
               <th>Description</th>
               <th>Date</th>
               <th>Location</th>
+              <th>Image</th>
             </tr>
           </thead>
           <tbody>
             {items.map(function(item) {
               return (
-                <tr key={item.item}>
-                  <td>{item.item}</td>
+                <tr key={item.entryId}>
+                  <td>
+                    {" "}
+                    {item.item}
+                    <DeleteEntry item={item.entryId} />
+                  </td>
                   <td>{item.description}</td>
                   <td>{item.date}</td>
                   <td>
                     {item.latitude}, {item.longitude}
+                  </td>
+                  <td>
+                    <img
+                      alt="display form"
+                      src={`data:image/jpeg;base64,${item.image}`}
+                    />
                   </td>
                 </tr>
               );
@@ -51,7 +51,7 @@ class Entries extends Component {
   }
 
   render() {
-    return this.displayItems(this.state.items);
+    return this.displayItems(this.props.items);
   }
 }
 

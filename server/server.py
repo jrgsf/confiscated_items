@@ -18,18 +18,25 @@ app.config['SECRET_KEY'] = 'super-secret'
 @cross_origin()
 def add_entry():
     file = request.files
-    image = file['0'].read()
+    print("got file", file)
+    image = file.get('0')
     data = file['document'].read()
     data = json.loads(data)
     item_name = data.get("itemName")
     item_description = data.get("itemDescription")
     latitude = data.get("latitude")
     longitude = data.get("longitude")
-    new_entry = Entry(item_name=item_name,
-                      item_description=item_description, latitude=latitude, longitude=longitude, image=image)
+    if image:
+        image = image.read()
+        new_entry = Entry(item_name=item_name,
+                          item_description=item_description, latitude=latitude, longitude=longitude, image=image)
+    else:
+        new_entry = Entry(item_name=item_name,
+                          item_description=item_description, latitude=latitude, longitude=longitude)
     db.session.add(new_entry)
     db.session.commit()
-    return "Done added it yeah"
+    data = get_entries()
+    return data
 
 
 @app.route("/api/entries", methods=['GET'])
@@ -40,6 +47,7 @@ def get_entries():
     items = []
     for entry in entries:
         item = {
+            "entryId": entry.entry_id,
             "item": entry.item_name,
             "description": entry.item_description,
             "date": entry.date.strftime("%m/%d/%Y"),
@@ -49,10 +57,20 @@ def get_entries():
 
         if entry.image:
             item['image'] = base64.encodestring(entry.image).decode('ascii')
-
         items.append(item)
-    print(items)
     return jsonify(items)
+
+
+@app.route("/api/delete-entry", methods=['POST'])
+def delete_entry():
+    entry_id = request.get_json()
+    print("entry_id", entry_id)
+    entry = Entry.query.filter_by(
+        entry_id=entry_id).first()
+    print("found entry", entry)
+    db.session.delete(entry)
+    db.session.commit()
+    return 'entry deleted!'
 
 
 if __name__ == "__main__":
