@@ -4,10 +4,8 @@ import DeleteEntry from "./DeleteEntry";
 class Entries extends Component {
   displayItems(items) {
     if (!items) {
-      console.log("items", items);
       return <div />;
     }
-    console.log("items", items);
     return (
       <div>
         <br />
