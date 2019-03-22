@@ -31,7 +31,10 @@ class Main extends Component {
   render() {
     return (
       <div className="container">
+        <h1 style={{ textAlign: "center" }}>Confiscated Items</h1>
         {this.displayEntries(this.props.items)}
+        <br />
+        <h2 style={{ textAlign: "center" }}>Enter new confiscated item</h2>
         {this.displayEntryForm(this.props.location)}
       </div>
     );

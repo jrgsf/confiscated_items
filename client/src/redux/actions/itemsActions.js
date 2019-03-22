@@ -13,6 +13,7 @@ export function receiveItems(items) {
 }
 
 export function fetchItems() {
+  console.log("fetching items");
   return dispatch => {
     return fetch(getItemsApi(), {
       method: "GET",
@@ -35,18 +36,22 @@ export function addItem(entry) {
       body: entry
     })
       .then(response => response.json())
-      .then(dispatch(fetchItems()));
+      .then(() => dispatch(fetchItems()));
   };
 }
 
-export function deleteItem(entry) {
-  return fetch(deleteItemApi(), {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(entry)
-  }).then(response => response.json());
+export function deleteItem(item) {
+  return dispatch => {
+    return fetch(deleteItemApi(), {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: item
+    })
+      .then(response => response.json())
+      .then(() => dispatch(fetchItems()));
+  };
 }

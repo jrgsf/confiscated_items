@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import * as itemsActions from "./redux/actions/itemsActions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Glyphicon } from "react-bootstrap";
 
 class DeleteEntry extends Component {
   constructor(props) {
@@ -18,10 +19,19 @@ class DeleteEntry extends Component {
       return <div />;
     }
     return (
-      <form id="delete-button">
-        <Button onClick={this.submit} id="trash-can">
-          Delete
-        </Button>
+      <form
+        style={{
+          display: "inline-block",
+          marginLeft: 5,
+          marginRight: 5
+        }}
+        id="delete-button"
+      >
+        <Glyphicon
+          onClick={this.submit}
+          glyph="glyphicon glyphicon-trash"
+          id="trash-can"
+        />
       </form>
     );
   }
@@ -55,10 +65,10 @@ class DeleteEntry extends Component {
 
 function mapStateToProps(state) {
   return {
-    item: state.item
+    items: state.items,
+    location: state.location
   };
 }
-
 function mapDispatchToProps(dispatch) {
   return {
     itemsActions: bindActionCreators(itemsActions, dispatch)

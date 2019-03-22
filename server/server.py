@@ -36,8 +36,7 @@ def add_entry():
                           item_description=item_description, latitude=latitude, longitude=longitude)
     db.session.add(new_entry)
     db.session.commit()
-    data = get_entries()
-    return data
+    return jsonify({"response": "success"})
 
 
 @app.route("/api/entries", methods=['GET'])
@@ -71,7 +70,7 @@ def delete_entry():
     print("found entry", entry)
     db.session.delete(entry)
     db.session.commit()
-    return 'entry deleted!'
+    return jsonify({"response": "success"})
 
 
 if __name__ == "__main__":

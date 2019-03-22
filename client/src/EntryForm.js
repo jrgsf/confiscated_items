@@ -15,7 +15,6 @@ class EntryForm extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.props.location);
     let files = this.state.pictures;
     const formData = new FormData();
     files.forEach((file, i) => {
@@ -32,6 +31,7 @@ class EntryForm extends Component {
     });
     formData.append("document", blob);
     this.props.itemsActions.addItem(formData);
+    event.target.reset();
   }
 
   handleChange(event) {

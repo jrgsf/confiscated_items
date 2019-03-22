@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import { Table } from "react-bootstrap";
 import DeleteEntry from "./DeleteEntry";
+import MapContainer from "./MapContainer";
 class Entries extends Component {
   displayItems(items) {
-    console.log("ready");
     if (!items) {
-      console.log("no");
       return <div />;
     }
-    console.log("yes");
     return (
-      <div>
+      <div style={{ fontSize: 14 }}>
         <br />
         <Table bordered>
           <thead>
@@ -28,19 +26,23 @@ class Entries extends Component {
                 <tr key={item.entryId}>
                   <td>
                     {" "}
-                    {item.item}
                     <DeleteEntry item={item.entryId} />
+                    {item.item}
                   </td>
                   <td>{item.description}</td>
                   <td>{item.date}</td>
                   <td>
                     {item.latitude}, {item.longitude}
+                    <MapContainer lat={item.latitude} lng={item.longitude} />
                   </td>
                   <td>
-                    <img
-                      alt="display form"
-                      src={`data:image/jpeg;base64,${item.image}`}
-                    />
+                    {item.image !== undefined && (
+                      <img
+                        style={{ height: 150 }}
+                        alt="display form"
+                        src={`data:image/jpeg;base64,${item.image}`}
+                      />
+                    )}
                   </td>
                 </tr>
               );
