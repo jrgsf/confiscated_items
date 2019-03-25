@@ -4,15 +4,18 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class FormEntry(db.Model):
+class AllItems(db.Model):
     """Table of Form"""
 
-    __tablename__ = "formentries"
+    __tablename__ = "all_items"
 
     form_entry_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.today)
-    itemName = db.Column(db.String(25), nullable=False)
-    itemDescription = db.Column(db.String(250), nullable=True)
+    item_name = db.Column(db.String(25), nullable=False)
+    item_description = db.Column(db.String(2500), nullable=True)
+
+###  ^^^ needs to correspond to this line from server.py:
+###     new_entry=AllItems(item_name=item_name, item_description=item_description)
 
 def connect_to_db(app):
     """Connect the database to our Flask app."""
@@ -25,4 +28,4 @@ def connect_to_db(app):
 if __name__ == "__main__":
     from server import app
     connect_to_db(app)
-    print("Connected to DB.")
+    print("Connected to DB.")  ### was here. Part of hackbright's boilerplate
