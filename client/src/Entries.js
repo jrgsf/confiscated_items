@@ -12,6 +12,8 @@ class Entries extends Component {
   async componentDidMount() {
     try {
       let response = await fetch('http://localhost:5000/api/entries');
+//      let response = await fetch('http://localhost:5000/api/entries?q={or however u interpolate in javascript}');
+//      ^^^ if we wanted to add a search function...
       let json = await response.json();
       this.setState({ items: json});
     } catch (erruhs) {

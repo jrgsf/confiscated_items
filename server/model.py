@@ -1,7 +1,6 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
-
 db = SQLAlchemy()
 
 class AllItems(db.Model):
@@ -23,6 +22,7 @@ def connect_to_db(app):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
+    print("connected to DB")
 
 
 if __name__ == "__main__":

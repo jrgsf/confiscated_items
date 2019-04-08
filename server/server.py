@@ -28,6 +28,7 @@ def add_entry():
     new_entry=AllItems(item_name=item_name, item_description=item_description)
     db.session.add(new_entry)
     db.session.commit()
+    print("everything but return...")
     return "Done added it yeah"
 
 
@@ -36,8 +37,15 @@ def add_entry():
 @cross_origin()
 #### ^^^ need this because 2 servers: front end and back end
 def view_entries():
-    entries = AllItems.query.all()
-    #### ^^^ from class name in model.py, returns list of db objects
+    q = request.args.get('q')
+    print(q)
+    entries = []
+    if q:
+        query_item = AllItems.query.filter(AllItems.item_name.like(f'%{q}%'))
+        entries = query_item.all()
+    else:
+        entries = AllItems.query.all()
+        #### ^^^ from class name in model.py, returns list of db objects
     list_of_json_objects_from_db = []
     for e in entries:
         dic_of_items = {
