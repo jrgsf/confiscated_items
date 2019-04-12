@@ -33,7 +33,7 @@ displayComponent(putting_thing_here) {
     /// everything needs a render()
     console.log("check render")
     //// Gotta wrap in div becuz who knows (rule in react)
-    return <div> <EntryForm/> <Entries/> </div>
+    return <div className="container"> <EntryForm/> <Entries/> </div>
 // =======
 // import React, { Component } from "react";
 // import Test from "./testytest.js";
