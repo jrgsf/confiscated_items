@@ -3,7 +3,7 @@ import { Form, Label, Input, Button } from "reactstrap";
 import * as itemsActions from "./redux/actions/itemsActions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-
+import FormPage from "./FormPage"
 
 class EntryForm extends React.Component {
     constructor(props) {
@@ -14,15 +14,13 @@ class EntryForm extends React.Component {
       };
       this.incrementIdx = this.incrementIdx.bind(this);
       this.handleTestClick = this.handleTestClick.bind(this);
-      this.endTest = this.endTest.bind(this);
+      this.submitForm = this.submitForm.bind(this);
     }
   
-    displayItem(studentTestItems) {
+    displayField(studentTestItems) {
       if (!studentTestItems) {
         return (
           <div className="test-complete-message">
-            {" "}
-            {/* <img src={image} alt="Logo" /> */}
           </div>
         );
       }
@@ -36,7 +34,7 @@ class EntryForm extends React.Component {
     }
 
 
-    endTest(event) {
+    submitForm(event) {
         event.preventDefault();
         if (this.props.studentTest.testItems.length === 0) {
             this.props.history.push(`/details/${this.props.match.params.id}`);
@@ -66,7 +64,6 @@ class EntryForm extends React.Component {
     handleTestClick(e, studentTestItems, idx) {
       e.preventDefault();
       this.incrementIdx(idx);
-      const answeredCorrectly = e.target.value === "yes";
   
       // this.props.studentTestActions.answerQuestion(
       //   studentTestItems,
@@ -75,18 +72,16 @@ class EntryForm extends React.Component {
     }
   
     render() {
-      const studentTestItems = this.props.studentTestItems;
       const idx = this.state.idx;
       return (
-        <div></div>
-        // <StudentTestPage
-        //   idx={idx}
-        //   studentTestItems={studentTestItems}
-        //   handleTestClick={this.handleTestClick}
-        //   endTest={this.endTest}
-        //   incrementIdx={this.incrementIdx}
-        //   displayItem={this.displayItem}
-        // />
+        <FormPage
+          idx={idx}
+          // studentTestItems={studentTestItems}
+          handleTestClick={this.handleTestClick}
+          submitForm={this.submitForm}
+          incrementIdx={this.incrementIdx}
+          displayField={this.displayField}
+        />
       );
     }
   }
