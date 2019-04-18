@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import * as itemsActions from "./redux/actions/itemsActions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Glyphicon } from "react-bootstrap";
+// import { Glyphicon } from "react-bootstrap";
 
 class DeleteEntry extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class DeleteEntry extends Component {
         }}
         id="delete-button"
       >
-        <Glyphicon
+        {/* <Glyphicon */}
           onClick={this.submit}
           glyph="glyphicon glyphicon-trash"
           id="trash-can"
