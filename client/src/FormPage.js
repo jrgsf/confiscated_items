@@ -3,15 +3,13 @@ const FormPage = props => (
   <div
     className="container"
   >
-    <div
-   
-    >
-      <div>{props.displayField(props.formFields[props.idx])}</div>
-    </div>
+  {console.log("PROPS", props.idx)}
+      <input type={props.formFields[props.idx].type} name={props.formFields[props.idx].name} 
+      placeholder={props.formFields[props.idx].placeholder} />
       <button
    
         onClick={e =>
-          props.handleTestClick(e, props.formFields[props.idx], props.idx)
+          props.handleTestClick(e,  props.idx)
         }
         value="next"
       >
