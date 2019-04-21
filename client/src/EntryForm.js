@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import FormPage from "./FormPage"
 
 const formFields = [
-  {name:"name", type: "text", placeholder: "name", label: "Claimant's Name"},
+  {name:"name", type: "text",  placeholder: "name", label: "Claimant's Name"},
   {name: "address1", type: "text",  placeholder: "address", label: "Claimant's Home Address"},
   {name: "city1",type: "text", placeholder: "city", label: "City" }, 
   {name: "state1", type: "text", placeholder: "state", label: "State"},
@@ -98,20 +98,20 @@ class EntryForm extends React.Component {
         // event.target.reset();
       }
 
-
+    handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
 
     handleTestClick(e, idx) {
       e.preventDefault();
-      console.log(e)
       this.incrementIdx(idx);
-      
-  
-      // this.props.studentTestActions.answerQuestion(
-      //   studentTestItems,
-      //   answeredCorrectly
-      // );
-    }
-  
+      const answered = e.target.value === "next";
+
+      // this.props.itemsActions.answered(
+      //   answered
+      // )
+      e.target.reset()
+}
     render() {
       const idx = this.state.idx;
       return (
