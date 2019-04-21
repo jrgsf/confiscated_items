@@ -2,3 +2,4 @@ export const FETCH_ITEMS = "FETCH_ITEMS";
 export const RECEIVE_ITEMS = "RECEIVE_ITEMS";
 export const GET_LOCATION = "GET_LOCATION";
 export const RECEIVE_LOCATION = "RECEIVE_LOCATION";
+export const ANSWER = "ANSWER"

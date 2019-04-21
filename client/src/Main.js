@@ -8,7 +8,7 @@ import * as locationActions from "./redux/actions/locationActions";
 
 class Main extends Component {
   componentDidMount() {
-    this.props.itemsActions.fetchItems();
+    // this.props.itemsActions.fetchItems();
     this.props.locationActions.getLocation();
   }
 

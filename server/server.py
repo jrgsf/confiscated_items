@@ -14,28 +14,40 @@ app.debug = True
 app.config['SECRET_KEY'] = 'super-secret'
 
 
-@app.route("/api/add-entry", methods=['POST'])
+# @app.route("/api/add-entry", methods=['POST'])
+# @cross_origin()
+# def add_entry():
+#     file = request.files
+#     print("got file", file)
+#     image = file.get('0')
+#     data = file['document'].read()
+#     data = json.loads(data)
+#     item_name = data.get("itemName")
+#     item_description = data.get("itemDescription")
+#     location = data.get("location")
+#     latitude = location["latitude"]
+#     longitude = location["longitude"]
+#     if image:
+#         image = image.read()
+#         new_entry = Entry(item_name=item_name,
+#                           item_description=item_description, latitude=latitude, longitude=longitude, image=image)
+#     else:
+#         new_entry = Entry(item_name=item_name,
+#                           item_description=item_description, latitude=latitude, longitude=longitude)
+#     db.session.add(new_entry)
+#     db.session.commit()
+#     return jsonify({"response": "success"})
+
+
+@app.route("/api/entries", methods=['POST'])
 @cross_origin()
 def add_entry():
-    file = request.files
-    print("got file", file)
-    image = file.get('0')
-    data = file['document'].read()
-    data = json.loads(data)
-    item_name = data.get("itemName")
-    item_description = data.get("itemDescription")
-    location = data.get("location")
-    latitude = location["latitude"]
-    longitude = location["longitude"]
-    if image:
-        image = image.read()
-        new_entry = Entry(item_name=item_name,
-                          item_description=item_description, latitude=latitude, longitude=longitude, image=image)
-    else:
-        new_entry = Entry(item_name=item_name,
-                          item_description=item_description, latitude=latitude, longitude=longitude)
-    db.session.add(new_entry)
-    db.session.commit()
+    data = request.get_json()
+    print(data)
+    # new_entry = Entry(item_name=item_name,
+    #                       item_description=item_description, latitude=latitude, longitude=longitude)
+    # db.session.add(new_entry)
+    # db.session.commit()
     return jsonify({"response": "success"})
 
 

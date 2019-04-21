@@ -19,10 +19,10 @@ const formFields = [
   {name: "dayPhone2", type:"tel", placeholder: "daytime phone",  label: "Telephone"},
   {name: "evePhone2", type:"tel", placeholder: "evening phone",  label: "Telephone"},
   {name: "cellPhone2", type:"tel", placeholder: "cellular phone",  label: "Telephone"},
-  {name: "dob", type: "date", placeholder: "date of birth", label: "Date of Birth"},
+  {name: "dateOfBirth", type: "date", placeholder: "date of birth", label: "Date of Birth"},
   {name: "ssn", type: "password", placeholder: "social security number", label: "Social Security Number"},
-  {name: "doi", type: "date", placeholder: "date of incident", label: "Date of Incident"},
-  {name: "toi", type: "time", placeholder:"time of incident", label: "Time of Incident"},
+  {name: "dateOfIncident", type: "date", placeholder: "date of incident", label: "Date of Incident"},
+  {name: "timeOfIncident", type: "time", placeholder:"time of incident", label: "Time of Incident"},
   {name: "location", type: "text", placeholder: "location", label:"Location of Incident or Accident"},
   {name: "vehicle", type: "text", placeholder:"license plate #, type, mileage, and year ", label: "Claimant Vehicle License Plate #, Type, Mileage, and Year"},
   {name: "basisOfClaim", type: "textArea", placeholder: "State in detail all the facts and circumstances of the incident. Identify all persons, property, and City departments involved.  State why you believe the City is responsible for the alleged injury, property damage, or loss", label: "Basis of Claim"},
@@ -44,19 +44,52 @@ const formFields = [
   {name: "witnessAddress2", type: "text", placeholder: "witness address", label: ""},
   {name: "witnessPhone2", type: "tel", placeholder: "witness phone", label: ""}
 ]
-
-// const fields = ["name", "address","city", "state", "zip", "phone1", "phone2", "phone3", "correspondenceAddress", "city2", "state2", "zip2", "phone4", "phone5", "phone6"]
-// const types = ["text", "textArea", "text", "text", "text", "tel", "tel", "tel", "textArea"]
-// const placeholders = ["name", "address","city", "state", "zip", "daytime phone", "evening phone", "cellular phone"]
-// const labels = ["Claimant's Name", "Claimant's Home Address", "City", "State", "Zip", "Telephone", "", "", "Send Official Notices and Correspondence to:"]
 class EntryForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        idx: 0
+        idx: 0,
+        name: "",
+        address1: "",
+        city1: "",
+        state1:"",
+        dayPhone1: "",
+        evePhone1: "",
+        cellPhone1: "",
+        address2: "",
+        city2: "",
+        state2:"",
+        dayPhone2: "",
+        evePhone2: "",
+        cellPhone2: "",
+        dateOfBirth: "",
+        ssn: "",
+        dateOfIncident: "",
+        timeOfIncident: "",
+        location: "",
+        vehicle: "",
+        basisOfClaim: "",
+        cityEmployee: "",
+        description: "",
+        item1: "",
+        amount1: "",
+        item2: "",
+        amount2: "",
+        item3: "",
+        amount3: "",
+        item4: "",
+        amount4: "",
+        total: "",
+        witness1: "",
+        witnessAddress1: "",
+        witnessPhone1: "",
+        witness2: "",
+        witnessAddress2: "",
+        witnessPhone2: ""
       };
       this.incrementIdx = this.incrementIdx.bind(this);
       this.handleTestClick = this.handleTestClick.bind(this);
+      this.handleChange = this.handleChange.bind(this);
       this.submitForm = this.submitForm.bind(this);
     }
   
@@ -79,6 +112,9 @@ class EntryForm extends React.Component {
 
     submitForm(event) {
         event.preventDefault();
+        const formData = this.state
+        console.log(formData)
+        this.props.itemsActions.addItem(formData)
         // let files = this.state.pictures;
         // const formData = new FormData();
         // files.forEach((file, i) => {
@@ -98,18 +134,12 @@ class EntryForm extends React.Component {
         // event.target.reset();
       }
 
-    handleChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-    }
-
+    handleChange(event) {
+        this.setState({ [event.target.name]: event.target.value });
+      }
     handleTestClick(e, idx) {
       e.preventDefault();
       this.incrementIdx(idx);
-      const answered = e.target.value === "next";
-
-      // this.props.itemsActions.answered(
-      //   answered
-      // )
       e.target.reset()
 }
     render() {
@@ -119,9 +149,9 @@ class EntryForm extends React.Component {
           idx={idx}
           formFields={formFields}
           handleTestClick={this.handleTestClick}
+          handleChange={this.handleChange}
           submitForm={this.submitForm}
           incrementIdx={this.incrementIdx}
-          // displayField={this.displayField}
         />
       );
     }
